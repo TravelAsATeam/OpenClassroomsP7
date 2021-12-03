@@ -28,7 +28,7 @@ if mode_predict == False :
         # Graphique
         chart = sns.jointplot(x=data[features[0]], y=data[features[1]], height=10)
         # Regression linéaire
-        sns.regplot(x=data[features[0]], y=data[features[1]], scatter=False, ax=graph.ax_joint)
+        sns.regplot(x=data[features[0]], y=data[features[1]], scatter=False, ax=chart.ax_joint)
         
 # Mode prédiction
 if mode_predict == True :
