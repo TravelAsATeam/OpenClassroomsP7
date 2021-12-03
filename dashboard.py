@@ -15,14 +15,11 @@ data = pd.read_csv(os.path.join(default_dir,'data_sampled.csv'))
 
 # Choix du mode de fonctionnement
 mode_predict = False
-mode_chart = False
 if st.button("Faire une prediction"):
     mode_predict = True
-if st.button("Afficher un graphique"):
-    mode_chart = True
 
 # Mode affichage de graphique
-if mode_chart == True :
+if mode_predict == False :
     features = st.multiselect("Choisissez deux variables", list(data.columns))
     if len(features) != 2 :
         st.error("Sélectionnez deux variables")
