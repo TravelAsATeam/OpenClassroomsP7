@@ -8,6 +8,7 @@ import streamlit as st
 import pandas as pd
 import seaborn as sns
 import os
+import matplotlib.pyplot as plt
 
 # Téléchargement des données
 default_dir = os.getcwd()
@@ -29,6 +30,8 @@ if mode_predict == False :
         chart = sns.jointplot(x=data[features[0]], y=data[features[1]], height=10)
         # Regression linéaire
         sns.regplot(x=data[features[0]], y=data[features[1]], scatter=False, ax=chart.ax_joint)
+        plt.show()
+       
         
 # Mode prédiction
 if mode_predict == True :
