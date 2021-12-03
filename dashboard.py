@@ -9,8 +9,6 @@ import pandas as pd
 import seaborn as sns
 import os
 
-from urllib.error import URLError
-
 # Téléchargement des données
 default_dir = os.getcwd()
 data = pd.read_csv(os.path.join(default_dir,'data_sampled.csv'))
