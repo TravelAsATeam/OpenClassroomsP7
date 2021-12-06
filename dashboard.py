@@ -37,16 +37,17 @@ if mode_predict == False :
         
 # Mode prédiction
 if mode_predict == True :
-    profile_ID = st.select("Choisissez un profil", list(data['SK_ID_CURR']))
-    profile_data = data[data['SK_ID_CURR']==profile_ID]
-    profile_data = profile_data.drop(['SK_ID_CURR'], axis = 1)
-    request = profile_data.to_json
+    profile_ID = st.multiselect("Choisissez un profil", list(data['SK_ID_CURR']))
+    if len(features) != 1 :
+        st.error("Sélectionnez un seul profil")
+    else :
+        profile_data = data[data['SK_ID_CURR']==profile_ID]
+        profile_data = profile_data.drop(['SK_ID_CURR'], axis = 1)
+        request = profile_data.to_json
     
-    URL='https://predictionp7.herokuapp.com/predict'
-    
-       
-    r = requests.post(URL, json=request)
-    st.write(r.json())
+        URL='https://predictionp7.herokuapp.com/predict'
+        r = requests.post(URL, json=request)
+        st.write(r.json())
     st.button("Recommencer")
  
  
