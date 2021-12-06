@@ -38,7 +38,7 @@ if mode_predict == False :
 # Mode prédiction
 if mode_predict == True :
     profile_ID = st.multiselect("Choisissez un profil", list(data['SK_ID_CURR']))
-    if len(profile_ID) != 1 :
+    if False :
         st.error("Sélectionnez un seul profil")
     else :
         profile_data = data[data['SK_ID_CURR']==profile_ID]
