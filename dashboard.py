@@ -8,7 +8,8 @@ import streamlit as st
 import pandas as pd
 import seaborn as sns
 import os
-
+import requests
+import json
 
 # Téléchargement des données
 default_dir = os.getcwd()
@@ -36,8 +37,19 @@ if mode_predict == False :
         
 # Mode prédiction
 if mode_predict == True :
-    st.error("Non implementé")
+    profile_ID = st.select("Choisissez un profil", list(data['SK_ID_CURR']))
+    profile_data = data[data['SK_ID_CURR']==profile_ID]
+    profile_data = profile_data.drop(['SK_ID_CURR'], axis = 1)
+    request = profile_data.to_json
+    
+    URL='https://predictionp7.herokuapp.com/predict'
+    
+       
+    r = requests.post(URL, json=request)
+    st.write(r.json())
     st.button("Recommencer")
+ 
+ 
  
 
 
