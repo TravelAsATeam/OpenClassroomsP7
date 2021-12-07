@@ -37,7 +37,7 @@ if mode ==  'Graphiques' :
 # Mode prédiction
 if mode == 'Prediction' :
     profile_ID = st.multiselect("Choisissez un profil", list(data['SK_ID_CURR']), default = 149741)
-    if len(features) != 1 :
+    if len(profile_ID) != 1 :
         st.error("Sélectionnez un seul profil")
     else :
         profile_data = data[data['SK_ID_CURR']==profile_ID]
