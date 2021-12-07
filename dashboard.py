@@ -22,7 +22,7 @@ if st.button("Faire une prediction"):
     mode_predict = True
 
 # Mode affichage de graphique
-if mode_predict == False :
+if mode_predict == True :
     features = st.multiselect("Choisissez deux variables", list(data_chart.columns))
     if len(features) != 2 :
         st.error("Sélectionnez deux variables")
@@ -36,7 +36,7 @@ if mode_predict == False :
     st.button("Recommencer")
         
 # Mode prédiction
-if mode_predict == True :
+if mode_predict == False :
     profile_ID = st.multiselect("Choisissez un profil", list(data['SK_ID_CURR']))
     if False :
         st.error("Sélectionnez un seul profil")
