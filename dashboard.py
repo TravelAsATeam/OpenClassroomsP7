@@ -40,7 +40,10 @@ if mode == 'Prediction' :
     if len(profile_ID) != 1 :
         st.error("Sélectionnez un seul profil")
     else :
-        profile_data = data[data['SK_ID_CURR']==profile_ID]
+        profile_ID = str(profile_ID)
+        query_str = str('SK_ID_CURR == '+ profile_ID)
+        profile_data = data.query(query_str)
+
         profile_data = profile_data.drop(['SK_ID_CURR','TARGET'], axis = 1)
         request = profile_data.to_json
     
