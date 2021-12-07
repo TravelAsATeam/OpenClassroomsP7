@@ -21,7 +21,7 @@ mode = st.selectbox('Choisissez le mode', options = ['Graphiques','Prediction'],
 
 
 # Mode affichage de graphique
-if mode == 'Prediction' :
+if mode ==  'Graphiques' :
     features = st.multiselect("Choisissez deux variables", list(data_chart.columns))
     if len(features) != 2 :
         st.error("Sélectionnez deux variables")
@@ -35,9 +35,9 @@ if mode == 'Prediction' :
     st.button("Recommencer")
         
 # Mode prédiction
-if mode == 'Graphiques' == False :
+if mode == 'Prediction' :
     profile_ID = st.multiselect("Choisissez un profil", list(data['SK_ID_CURR']), default = 149741)
-    if False :
+    if len(features) != 1 :
         st.error("Sélectionnez un seul profil")
     else :
         profile_data = data[data['SK_ID_CURR']==profile_ID]
