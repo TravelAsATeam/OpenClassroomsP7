@@ -17,12 +17,11 @@ data = pd.read_csv(os.path.join(default_dir,'data_sampled.csv'))
 data_chart = pd.read_csv(os.path.join(default_dir,'data_chart_sampled.csv'))
 
 # Choix du mode de fonctionnement
-mode_predict = False
-if st.button("Faire une prediction"):
-    mode_predict = True
+mode = st.selectbox('Choisissez le mode', options = ['Graphiques','Prediction'], index=1)
+
 
 # Mode affichage de graphique
-if mode_predict == True :
+if mode == 'Prediction' :
     features = st.multiselect("Choisissez deux variables", list(data_chart.columns))
     if len(features) != 2 :
         st.error("Sélectionnez deux variables")
@@ -36,8 +35,8 @@ if mode_predict == True :
     st.button("Recommencer")
         
 # Mode prédiction
-if mode_predict == False :
-    profile_ID = st.multiselect("Choisissez un profil", list(data['SK_ID_CURR']))
+if mode == 'Graphiques' == False :
+    profile_ID = st.multiselect("Choisissez un profil", list(data['SK_ID_CURR']), default = 149741)
     if False :
         st.error("Sélectionnez un seul profil")
     else :
