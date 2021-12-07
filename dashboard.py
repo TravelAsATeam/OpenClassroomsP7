@@ -49,7 +49,7 @@ if mode == 'Prediction' :
     
         URL='https://predictionp7.herokuapp.com/predict'
         r = requests.post(URL, json=request)
-        st.write(r.json())
+        st.write(r)
     st.button("Recommencer")
  
  
