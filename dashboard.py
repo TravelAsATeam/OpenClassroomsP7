@@ -42,7 +42,7 @@ if mode_predict == False :
         st.error("Sélectionnez un seul profil")
     else :
         profile_data = data[data['SK_ID_CURR']==profile_ID]
-        profile_data = profile_data.drop(['SK_ID_CURR'], axis = 1)
+        profile_data = profile_data.drop(['SK_ID_CURR','TARGET'], axis = 1)
         request = profile_data.to_json
     
         URL='https://predictionp7.herokuapp.com/predict'
