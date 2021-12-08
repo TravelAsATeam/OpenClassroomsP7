@@ -51,7 +51,9 @@ if mode == 'Prediction' :
         headers = {'Content-Type': 'application/json'}
         
         r = requests.post(URL, headers=headers, data = request, verify=False)
-        st.write(r.json())
+        if r.json()[0]>0.5 :
+            st.write('La prediction par machine learning apporte un avis défavorable.')
+        else : st.write('La prediction par machine learning apporte un avis favorable.')
         
     st.button("Recommencer")
  
