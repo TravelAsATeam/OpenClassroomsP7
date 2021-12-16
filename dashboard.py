@@ -12,6 +12,7 @@ import requests
 import shap
 import joblib
 import json
+import plotly.express as px
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
 # Téléchargement des données
@@ -32,11 +33,11 @@ with open('val_file.pkl', 'rb') as f:
 #st.write("Calcul terminé")
 
 # Choix du mode de fonctionnement
-mode = st.selectbox('Choisissez le mode', options = ['Graphiques','Prediction','Interprétabilité globale'], index=1)
+mode = st.selectbox('Choisissez le mode', options = ['Graphiques bivariés avec regression linéaire','Prediction','Interprétabilité globale','Mode recherche','Graphiques interactifs'], index=1)
 
 
-# Mode affichage de graphique
-if mode ==  'Graphiques' :
+# Mode affichage de graphique bivariés avec regression linéaire
+if mode ==  'Graphiques bivariés avec regression linéaire' :
     features = st.multiselect("Choisissez deux variables", list(data_chart.columns))
     if len(features) != 2 :
         st.error("Sélectionnez deux variables")
@@ -48,7 +49,31 @@ if mode ==  'Graphiques' :
         sns.regplot(x=data_chart[features[0]], y=data_chart[features[1]], scatter=False, ax=chart.ax_joint)
         st.pyplot(chart)
     st.button("Recommencer")
-        
+
+# Mode graphique interactifs        
+if mode ==  'Graphiques interactifs' :
+    features = st.multiselect("Choisissez deux variables", list(data_chart.columns))
+    if len(features) != 2 :
+        st.error("Sélectionnez deux variables")
+    else :
+        st.write("## Graphique interactif avec défaut en couleur")
+        # Graphique
+        chart = px.scatter(data_chart, x=features[0], y=[features[1], color='TARGET')
+        st.pyplot(chart)
+    st.button("Recommencer")
+
+# Mode Recherche     
+if mode ==  'Mode recherche' :
+    profile_ID = st.multiselect("Choisissez un ou plusieurs profils à mettre en évidence", list(data['SK_ID_CURR']), default = 149741)
+    temp_data_chart = data_chart
+    temp_data_chart['HIGHLIGHT'] = temp_data_chart['SK_ID_CURR'].apply(lambda x : True if x in profile_ID else False)
+    st.write("## Graphique interactif avec profils choisis en couleur")
+    # Graphique
+    chart = px.scatter(temp_data_chart, x=features[0], y=[features[1], color='HIGHLIGHT')
+    st.pyplot(chart)
+    st.button("Recommencer")
+    
+    
 # Mode prédiction
 if mode == 'Prediction' :
     profile_ID = st.multiselect("Choisissez un profil", list(data['SK_ID_CURR']), default = 149741)

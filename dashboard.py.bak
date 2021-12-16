@@ -11,6 +11,7 @@ import os
 import requests
 import shap
 import joblib
+import json
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
 # Téléchargement des données
