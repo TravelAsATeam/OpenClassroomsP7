@@ -74,9 +74,8 @@ if mode == 'Prediction' :
 # Mode interprétabilité globale
 if mode ==  'Interprétabilité globale' :
     st.write('Les graphiques suivants indiquent les variables ayant le plus contribué au modèle.')
-    shap.summary_plot(shap_values, data_SHAP.values, feature_names=data_SHAP.columns,
-                  max_display=20)
-    st.pyplot(summary_plot)                 
+    beeswarm = shap.beeswarm(shap_values, max_display=20)
+    st.pyplot(beeswarm)                 
                      
     st.button("Recommencer")
 
