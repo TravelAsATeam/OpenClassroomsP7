@@ -67,7 +67,7 @@ if mode == 'Prediction' :
             st.write('La prediction par machine learning apporte un avis défavorable.')
         else : st.write('La prediction par machine learning apporte un avis favorable.')
         # Interprétabilité locale
-                st.write('Le graphique suivant indique les variables ayant le plus contribué à la prédiction et dans quel sens.')
+        st.write('Le graphique suivant indique les variables ayant le plus contribué à la prédiction et dans quel sens.')
         waterfall = shap.plots.waterfall(shap_values[profile_index], max_display=20)
         st.pyplot(waterfall)
         

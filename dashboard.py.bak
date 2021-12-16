@@ -23,8 +23,8 @@ data.reset_index(inplace=True, drop = True)
 # Calcul de l'interpretabilite
 st.write("Calcul de l'interpretabilite, patientez")
 model = joblib.load('model_rf.pkl')
-        explainer = shap.Explainer(model, data.drop(['SK_ID_CURR','TARGET'], axis = 1))
-        shap_values = explainer(data.drop(['SK_ID_CURR','TARGET'], axis = 1), check_additivity=False)
+explainer = shap.Explainer(model, data.drop(['SK_ID_CURR','TARGET'], axis = 1))
+shap_values = explainer(data.drop(['SK_ID_CURR','TARGET'], axis = 1), check_additivity=False)
 st.write("Calcul terminé")
 
 # Choix du mode de fonctionnement
