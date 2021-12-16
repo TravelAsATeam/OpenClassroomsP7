@@ -33,7 +33,7 @@ with open('val_file.pkl', 'rb') as f:
 #st.write("Calcul terminé")
 
 # Choix du mode de fonctionnement
-mode = st.selectbox('Choisissez le mode', options = ['Graphiques bivariés avec regression linéaire','Prediction','Interprétabilité globale','Mode recherche','Graphiques interactifs'], index=1)
+mode = st.selectbox('Choisissez le mode', options = ['Graphiques bivariés avec regression linéaire','Prediction','Interprétabilité globale','Mode recherche','Graphiques interactifs'], index=4)
 
 
 # Mode affichage de graphique bivariés avec regression linéaire
@@ -46,7 +46,7 @@ if mode ==  'Graphiques bivariés avec regression linéaire' :
         # Graphique
         chart = sns.jointplot(x=data_chart[features[0]], y=data_chart[features[1]], height=10)
         # Regression linéaire
-        sns.regplot(x=data_chart[features[0]], y=data_chart[features[1]], scatter=False, ax=chart.ax_joint)
+        sns.regplot(x=data_chart[features[0]], y=data_chart[features[1]], scatter=False, ax=chart.ax_joint))
         st.pyplot(chart)
     st.button("Recommencer")
 
@@ -56,22 +56,26 @@ if mode ==  'Graphiques interactifs' :
     if len(features) != 2 :
         st.error("Sélectionnez deux variables")
     else :
-        st.write("## Graphique interactif avec défaut en couleur")
+        st.write("## Graphique interactif avec le défaut attendu en couleur")
         # Graphique
         chart = px.scatter(data_chart, x=features[0], y=features[1], color='TARGET')
-        st.pyplot(chart)
+        chart.show()
     st.button("Recommencer")
 
 # Mode Recherche     
 if mode ==  'Mode recherche' :
-    profile_ID = st.multiselect("Choisissez un ou plusieurs profils à mettre en évidence", list(data['SK_ID_CURR']), default = 149741)
-    temp_data_chart = data_chart
-    temp_data_chart['HIGHLIGHT'] = temp_data_chart['SK_ID_CURR'].apply(lambda x : True if x in profile_ID else False)
-    st.write("## Graphique interactif avec profils choisis en couleur")
-    # Graphique
-    chart = px.scatter(temp_data_chart, x=features[0], y=features[1], color='HIGHLIGHT')
-    st.pyplot(chart)
-    st.button("Recommencer")
+    features = st.multiselect("Choisissez deux variables", list(data_chart.columns))
+    if len(features) != 2 :
+        st.error("Sélectionnez deux variables")
+    else :
+        profile_ID = st.multiselect("Choisissez un ou plusieurs profils à mettre en évidence", list(data['SK_ID_CURR']), default = 149741)
+        temp_data_chart = data_chart
+        temp_data_chart['HIGHLIGHT'] = temp_data_chart['SK_ID_CURR'].apply(lambda x : True if x in profile_ID else False)
+        st.write("## Graphique interactif avec profils choisis en couleur")
+        # Graphique
+        chart = px.scatter(temp_data_chart, x=features[0], y=features[1], color='HIGHLIGHT')
+        st.pyplot(chart)
+        st.button("Recommencer")
     
     
 # Mode prédiction
@@ -102,7 +106,7 @@ if mode == 'Prediction' :
         
 # Mode interprétabilité globale
 if mode ==  'Interprétabilité globale' :
-    st.write('Les graphiques suivants indiquent les variables ayant le plus contribué au modèle.')
+    st.write('Le graphique suivant indique les variables ayant le plus contribué au modèle.')
     beeswarm = shap.plots.beeswarm(shap_values, max_display=20)
     st.pyplot(beeswarm)                 
                      
