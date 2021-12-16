@@ -50,10 +50,10 @@ if mode == 'Prediction' :
         profile_data = profile_data.drop(['SK_ID_CURR','TARGET'], axis = 1)
         profile_data = profile_data.to_dict(orient='list')
         request = json.dumps(profile_data)
-        st.write(len(profile_data))
+        st.write(profile_data.columns)
         
-        URL='http://travelasateam.pythonanywhere.com/predict/'
-        headers = {'Content-Type': 'application/json'}
+        #URL='http://travelasateam.pythonanywhere.com/predict/'
+        #headers = {'Content-Type': 'application/json'}
         
         #r = requests.post(URL, headers=headers, data = request, verify=False)
         #if r.json()[0]>0.5 :
