@@ -9,8 +9,7 @@ import pandas as pd
 import seaborn as sns
 import os
 import requests
-import json
-import shap
+gitimport shap
 import joblib
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
@@ -19,13 +18,17 @@ default_dir = os.getcwd()
 data = pd.read_csv(os.path.join(default_dir,'data_sampled.csv'))
 data_chart = pd.read_csv(os.path.join(default_dir,'data_chart_sampled.csv'))
 data.reset_index(inplace=True, drop = True)
+# Données d'interprétabilité
+with open('val_file.pkl', 'rb') as f:
+     shap_values = pickle.load(f)
+
 
 # Calcul de l'interpretabilite
-st.write("Calcul de l'interpretabilite, patientez")
-model = joblib.load('model_rf.pkl')
-explainer = shap.Explainer(model, data.drop(['SK_ID_CURR','TARGET'], axis = 1))
-shap_values = explainer(data.drop(['SK_ID_CURR','TARGET'], axis = 1), check_additivity=False)
-st.write("Calcul terminé")
+#st.write("Calcul de l'interpretabilite, patientez")
+#model = joblib.load('model_rf.pkl')
+#explainer = shap.Explainer(model, data.drop(['SK_ID_CURR','TARGET'], axis = 1))
+#shap_values = explainer(data.drop(['SK_ID_CURR','TARGET'], axis = 1), check_additivity=False)
+#st.write("Calcul terminé")
 
 # Choix du mode de fonctionnement
 mode = st.selectbox('Choisissez le mode', options = ['Graphiques','Prediction','Interprétabilité globale'], index=1)
@@ -74,7 +77,7 @@ if mode == 'Prediction' :
 # Mode interprétabilité globale
 if mode ==  'Interprétabilité globale' :
     st.write('Les graphiques suivants indiquent les variables ayant le plus contribué au modèle.')
-    beeswarm = shap.beeswarm(shap_values, max_display=20)
+    beeswarm = shap.plots.beeswarm(shap_values, max_display=20)
     st.pyplot(beeswarm)                 
                      
     st.button("Recommencer")
