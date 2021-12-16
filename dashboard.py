@@ -58,7 +58,7 @@ if mode ==  'Graphiques interactifs' :
     else :
         st.write("## Graphique interactif avec défaut en couleur")
         # Graphique
-        chart = px.scatter(data_chart, x=features[0], y=[features[1], color='TARGET')
+        chart = px.scatter(data_chart, x=features[0], y=features[1], color='TARGET')
         st.pyplot(chart)
     st.button("Recommencer")
 
@@ -69,7 +69,7 @@ if mode ==  'Mode recherche' :
     temp_data_chart['HIGHLIGHT'] = temp_data_chart['SK_ID_CURR'].apply(lambda x : True if x in profile_ID else False)
     st.write("## Graphique interactif avec profils choisis en couleur")
     # Graphique
-    chart = px.scatter(temp_data_chart, x=features[0], y=[features[1], color='HIGHLIGHT')
+    chart = px.scatter(temp_data_chart, x=features[0], y=features[1], color='HIGHLIGHT')
     st.pyplot(chart)
     st.button("Recommencer")
     
