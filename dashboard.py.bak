@@ -9,7 +9,7 @@ import pandas as pd
 import seaborn as sns
 import os
 import requests
-gitimport shap
+import shap
 import joblib
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
