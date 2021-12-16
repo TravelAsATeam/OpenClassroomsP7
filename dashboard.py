@@ -59,7 +59,7 @@ if mode ==  'Graphiques interactifs' :
         st.write("## Graphique interactif avec le défaut attendu en couleur")
         # Graphique
         chart = px.scatter(data_chart, x=features[0], y=features[1], color='TARGET')
-        chart.show()
+        st.plotly_chart(chart)
     st.button("Recommencer")
 
 # Mode Recherche     
@@ -74,8 +74,8 @@ if mode ==  'Mode recherche' :
         st.write("## Graphique interactif avec profils choisis en couleur")
         # Graphique
         chart = px.scatter(temp_data_chart, x=features[0], y=features[1], color='HIGHLIGHT')
-        st.pyplot(chart)
-        st.button("Recommencer")
+        st.plotly_chart(chart)
+    st.button("Recommencer")
     
     
 # Mode prédiction
