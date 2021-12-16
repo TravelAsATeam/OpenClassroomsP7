@@ -46,7 +46,7 @@ if mode ==  'Graphiques bivariés avec regression linéaire' :
         # Graphique
         chart = sns.jointplot(x=data_chart[features[0]], y=data_chart[features[1]], height=10)
         # Regression linéaire
-        sns.regplot(x=data_chart[features[0]], y=data_chart[features[1]], scatter=False, ax=chart.ax_joint))
+        sns.regplot(x=data_chart[features[0]], y=data_chart[features[1]], scatter=False, ax=chart.ax_joint)
         st.pyplot(chart)
     st.button("Recommencer")
 
