@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[4]:
-
-
 import streamlit as st
 import pandas as pd
 import seaborn as sns
@@ -23,14 +20,6 @@ data.reset_index(inplace=True, drop = True)
 # Données d'interprétabilité
 with open('val_file.pkl', 'rb') as f:
      shap_values = joblib.load(f)
-
-
-# Calcul de l'interpretabilite
-#st.write("Calcul de l'interpretabilite, patientez")
-#model = joblib.load('model_rf.pkl')
-#explainer = shap.Explainer(model, data.drop(['SK_ID_CURR','TARGET'], axis = 1))
-#shap_values = explainer(data.drop(['SK_ID_CURR','TARGET'], axis = 1), check_additivity=False)
-#st.write("Calcul terminé")
 
 # Choix du mode de fonctionnement
 mode = st.selectbox('Choisissez le mode', options = ['Graphiques bivariés avec regression linéaire','Prediction','Interprétabilité globale','Mode recherche','Graphiques interactifs'], index=4)
@@ -68,7 +57,7 @@ if mode ==  'Mode recherche' :
     if len(features) != 2 :
         st.error("Sélectionnez deux variables")
     else :
-        profile_ID = st.multiselect("Choisissez un ou plusieurs profils à mettre en évidence", list(data['SK_ID_CURR']), default = 149741)
+        profile_ID = st.multiselect("Choisissez un ou plusieurs profils à mettre en évidence", list(data['SK_ID_CURR']), default = 188624)
         temp_data_chart = data_chart
         temp_data_chart['HIGHLIGHT'] = temp_data_chart['SK_ID_CURR'].apply(lambda x : True if x in profile_ID else False)
         st.write("## Graphique interactif avec profils choisis en couleur")
