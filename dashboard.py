@@ -20,7 +20,7 @@ data_chart = pd.read_csv(os.path.join(default_dir,'data_chart_sampled.csv'))
 data.reset_index(inplace=True, drop = True)
 # Données d'interprétabilité
 with open('val_file.pkl', 'rb') as f:
-     shap_values = pickle.load(f)
+     shap_values = joblib.load(f)
 
 
 # Calcul de l'interpretabilite
