@@ -17,7 +17,7 @@ import joblib
 default_dir = os.getcwd()
 data = pd.read_csv(os.path.join(default_dir,'data_sampled.csv'))
 data_chart = pd.read_csv(os.path.join(default_dir,'data_chart_sampled.csv'))
-#data.reset_index(inplace=True)
+data.reset_index(inplace=True, drop = True)
 
 # Choix du mode de fonctionnement
 mode = st.selectbox('Choisissez le mode', options = ['Graphiques','Prediction','Interprétabilité globale'], index=1)
@@ -63,8 +63,9 @@ if mode == 'Prediction' :
         explainer = shap.Explainer(model, data.drop(['SK_ID_CURR','TARGET'], axis = 1))
         shap_values = explainer(data.drop(['SK_ID_CURR','TARGET'], axis = 1), check_additivity=False)
         st.write('Le graphique suivant indique les variables ayant le plus contribué à la prédiction et dans quel sens.')
-        shap.plots.waterfall(shap_values[profile_index], max_display=20)
-
+        waterfall = shap.plots.waterfall(shap_values[profile_index], max_display=20)
+        st.pyplot(waterfall)
+        
 # Mode interprétabilité globale
 if mode ==  'Interprétabilité globale' :
     model = joblib.load('model_rf.pkl')
@@ -73,7 +74,7 @@ if mode ==  'Interprétabilité globale' :
     st.write('Les graphiques suivants indiquent les variables ayant le plus contribué au modèle.')
     shap.summary_plot(shap_values, data_SHAP.values, feature_names=data_SHAP.columns,
                   max_display=20)
-                     
+    st.pyplot(summary_plot)                 
                      
     st.button("Recommencer")
 
