@@ -12,6 +12,7 @@ import requests
 import json
 import shap
 import joblib
+st.set_option('deprecation.showPyplotGlobalUse', False)
 
 # Téléchargement des données
 default_dir = os.getcwd()
