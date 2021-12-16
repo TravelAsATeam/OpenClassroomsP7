@@ -17,7 +17,7 @@ import joblib
 default_dir = os.getcwd()
 data = pd.read_csv(os.path.join(default_dir,'data_sampled.csv'))
 data_chart = pd.read_csv(os.path.join(default_dir,'data_chart_sampled.csv'))
-data = data.reset_index
+data.reset_index(inplace=True)
 
 # Choix du mode de fonctionnement
 mode = st.selectbox('Choisissez le mode', options = ['Graphiques','Prediction','Interprétabilité globale'], index=1)
