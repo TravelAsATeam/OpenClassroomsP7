@@ -70,7 +70,7 @@ if mode ==  'Interprétabilité globale' :
     model = joblib.load('model_rf.pkl')
     explainer = shap.Explainer(model, data.drop(['SK_ID_CURR','TARGET'], axis = 1))
     shap_values = explainer(data.drop(['SK_ID_CURR','TARGET'], axis = 1), check_additivity=False)
-    st.write('Les graphiques suivants indiquent les variables ayant le plus contribué au modèle.)
+    st.write('Les graphiques suivants indiquent les variables ayant le plus contribué au modèle.')
     shap.summary_plot(shap_values, data_SHAP.values, feature_names=data_SHAP.columns,
                   max_display=20)
                      

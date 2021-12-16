@@ -62,7 +62,7 @@ if mode == 'Prediction' :
         model = joblib.load('model_rf.pkl')
         explainer = shap.Explainer(model, data.drop(['SK_ID_CURR','TARGET'], axis = 1))
         shap_values = explainer(data.drop(['SK_ID_CURR','TARGET'], axis = 1), check_additivity=False)
-        st.write('Le graphique suivant indique les variables ayant le plus contribué à la prédiction et dans quel sens.)
+        st.write('Le graphique suivant indique les variables ayant le plus contribué à la prédiction et dans quel sens.')
         shap.plots.waterfall(shap_values[profile_index], max_display=20)
 
 # Mode interprétabilité globale
