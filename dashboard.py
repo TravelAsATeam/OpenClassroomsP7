@@ -17,7 +17,7 @@ import joblib
 default_dir = os.getcwd()
 data = pd.read_csv(os.path.join(default_dir,'data_sampled.csv'))
 data_chart = pd.read_csv(os.path.join(default_dir,'data_chart_sampled.csv'))
-data.reset_index(inplace=True)
+#data.reset_index(inplace=True)
 
 # Choix du mode de fonctionnement
 mode = st.selectbox('Choisissez le mode', options = ['Graphiques','Prediction','Interprétabilité globale'], index=1)
@@ -50,15 +50,14 @@ if mode == 'Prediction' :
         profile_data = profile_data.drop(['SK_ID_CURR','TARGET'], axis = 1)
         profile_data = profile_data.to_dict(orient='list')
         request = json.dumps(profile_data)
-        st.write(profile_data.columns)
         
-        #URL='http://travelasateam.pythonanywhere.com/predict/'
-        #headers = {'Content-Type': 'application/json'}
+        URL='http://travelasateam.pythonanywhere.com/predict/'
+        headers = {'Content-Type': 'application/json'}
         
-        #r = requests.post(URL, headers=headers, data = request, verify=False)
-        #if r.json()[0]>0.5 :
-        #    st.write('La prediction par machine learning apporte un avis défavorable.')
-        #else : st.write('La prediction par machine learning apporte un avis favorable.')
+        r = requests.post(URL, headers=headers, data = request, verify=False)
+        if r.json()[0]>0.5 :
+            st.write('La prediction par machine learning apporte un avis défavorable.')
+        else : st.write('La prediction par machine learning apporte un avis favorable.')
         # Interprétabilité locale
         model = joblib.load('model_rf.pkl')
         explainer = shap.Explainer(model, data.drop(['SK_ID_CURR','TARGET'], axis = 1))
