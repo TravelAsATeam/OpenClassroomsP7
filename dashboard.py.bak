@@ -12,6 +12,7 @@ import requests
 import shap
 import joblib
 st.set_option('deprecation.showPyplotGlobalUse', False)
+import pickle
 
 # Téléchargement des données
 default_dir = os.getcwd()
