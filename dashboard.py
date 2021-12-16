@@ -10,14 +10,17 @@ import seaborn as sns
 import os
 import requests
 import json
+import shap
+import joblib
 
 # Téléchargement des données
 default_dir = os.getcwd()
 data = pd.read_csv(os.path.join(default_dir,'data_sampled.csv'))
 data_chart = pd.read_csv(os.path.join(default_dir,'data_chart_sampled.csv'))
+data = data.reset_index
 
 # Choix du mode de fonctionnement
-mode = st.selectbox('Choisissez le mode', options = ['Graphiques','Prediction'], index=1)
+mode = st.selectbox('Choisissez le mode', options = ['Graphiques','Prediction','Interprétabilité globale'], index=1)
 
 
 # Mode affichage de graphique
@@ -43,6 +46,7 @@ if mode == 'Prediction' :
         profile_ID = str(profile_ID)
         query_str = str('SK_ID_CURR == '+ profile_ID)
         profile_data = data.query(query_str)
+        profile_index = profile_data.index[0]
         profile_data = profile_data.drop(['SK_ID_CURR','TARGET'], axis = 1)
         profile_data = profile_data.to_dict(orient='list')
         request = json.dumps(profile_data)
@@ -54,20 +58,24 @@ if mode == 'Prediction' :
         if r.json()[0]>0.5 :
             st.write('La prediction par machine learning apporte un avis défavorable.')
         else : st.write('La prediction par machine learning apporte un avis favorable.')
-        
+        # Interprétabilité locale
+        model = joblib.load('model_rf.pkl')
+        explainer = shap.Explainer(model, data.drop(['SK_ID_CURR','TARGET'], axis = 1))
+        shap_values = explainer(data.drop(['SK_ID_CURR','TARGET'], axis = 1), check_additivity=False)
+        st.write('Le graphique suivant indique les variables ayant le plus contribué à la prédiction et dans quel sens.)
+        shap.plots.waterfall(shap_values[profile_index], max_display=20)
+
+# Mode interprétabilité globale
+if mode ==  'Interprétabilité globale' :
+    model = joblib.load('model_rf.pkl')
+    explainer = shap.Explainer(model, data.drop(['SK_ID_CURR','TARGET'], axis = 1))
+    shap_values = explainer(data.drop(['SK_ID_CURR','TARGET'], axis = 1), check_additivity=False)
+    st.write('Les graphiques suivants indiquent les variables ayant le plus contribué au modèle.)
+    shap.summary_plot(shap_values, data_SHAP.values, feature_names=data_SHAP.columns,
+                  max_display=20)
+                     
+                     
     st.button("Recommencer")
- 
- 
- 
-
-
-# In[5]:
-
-
-1 !=2
-
-
-# In[ ]:
 
 
 
