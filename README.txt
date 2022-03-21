@@ -7,7 +7,7 @@ Il inclut :
 -une API de prédiction déployée sur le cloud sur la plateforme https://www.pythonanywhere.com à l'adresse 
 http://travelasateam.pythonanywhere.com/predict/
 
-- un dashboard permettant de visualiser des données, de faire appel à l'API de prédiction et de fournir des informations sur l'interprétabilité locale et globale du modèle, il est dispoible à l'adresse
+- un exemple de principe de dashboard permettant de visualiser des données, de faire appel à l'API de prédiction et de fournir des informations sur l'interprétabilité locale et globale du modèle, il est disponible à l'adresse
 https://share.streamlit.io/travelasateam/openclassroomsp7/main/dashboard.py
 
 - un notebook détaillant la recherche du modèle
